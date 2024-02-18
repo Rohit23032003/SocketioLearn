@@ -10,10 +10,10 @@ const signUp = async (req, res) => {
     const { userName, email, password } = data;
     try {
         const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUND));
-
         const refreshToken = jwt.sign({
-            userName, email
-        }, process.env.TOKEN_SECRET,
+            userName,
+             email     
+            }, process.env.TOKEN_SECRET,
             { expiresIn: process.env.REFRESH_TOKEN_EXPIRY });
 
         const newUser = new User({ userName, email, password: hashedPassword, refreshToken });
@@ -21,9 +21,8 @@ const signUp = async (req, res) => {
         await newUser.save();
 
         const AccessToken = jwt.sign({
-            id: newUser._id
+            _id: newUser._id
         }, process.env.TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRY });
-
         res.cookie('accessToken' , AccessToken , {httpOnly:true});
         res.cookie('refreshToken' , refreshToken , {httpOnly:true});
 
