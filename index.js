@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import http from 'http';
 import connect from './ConnectionDB/connectDb.js';
 import router from "./Routes/routes.js";
-
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ app.use(cors({
     credentials:true
 }));
 app.use(express.json());
-
+app.use(cookieParser());
 
 const server = http.createServer(app);
 
