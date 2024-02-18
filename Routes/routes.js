@@ -5,8 +5,8 @@ import {loginUsingData ,loginwithTokens }from '../Controllers/login.js';
 const router = Router();
 
 router.route('/').post(signUp);
-router.route('/login').get(loginUsingData);
-router.route('/login').post(loginwithTokens);
+router.route('/login').get(loginwithTokens);
+router.route('/login').post(loginUsingData);
 
 
 export default router;

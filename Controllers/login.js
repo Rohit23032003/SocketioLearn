@@ -11,12 +11,11 @@ const loginUsingData = async (req , res) => {
         const{userName , password} = req.body;
         const user = await User.findOne({ userName });
         if (!user) {
-            res.status(400).json({ success: false, message: 'User doesnot exists' });
+            return res.status(400).json({ success: false, message: 'User doesnot exists' });
         }
-        console.log('heloo 1');
-        const passwordMatch =  bcrypt.compare(password, user.password);
+        const passwordMatch = await  bcrypt.compare(password, user.password);
         if (!passwordMatch) {
-            res.status(400).json({ success: false, message: 'Invalid credentials' });
+            return res.status(400).json({ success: false, message: 'Invalid credentials' });
         }
         const newUser = {
             _id:user._id,
@@ -39,11 +38,10 @@ const loginUsingData = async (req , res) => {
 
             res.cookie('accessToken' , AccessToken , {httpOnly:true});
             res.cookie('refreshToken' , refreshToken , {httpOnly:true});
-
-            res.status(400).json({ success: true, newUser });
+             res.status(200).json({ success: true, newUser });
 
     } catch (error) {
-        res.status(500).json({ success: false, message: 'An unexpected error occurred',error});
+         res.status(500).json({ success: false, message: 'An unexpected error occurred',error});
     }
 };
 
