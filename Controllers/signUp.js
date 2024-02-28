@@ -9,6 +9,11 @@ const signUp = async (req, res) => {
     const data = req.body;
     const { userName, email, password } = data;
     try {
+
+        const exists = await User.findOne({userName , email});
+        if(exists){
+            return  res.status(500).json({success:false , message: "User Already Exists"});
+        }
         const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUND));
         const refreshToken = jwt.sign({
             userName,
