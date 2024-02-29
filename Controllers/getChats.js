@@ -15,6 +15,5 @@ const fetchChats = async (req , res) => {
             message:'error while getting chats' , error});
     }
 }
-
 export default fetchChats;
 
