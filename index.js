@@ -11,7 +11,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const userSocketMap = {};
-
+const senderReceiverMap = {};
 
 const app = express();
 app.use(cors({
@@ -50,21 +50,40 @@ io.on("connection",(socket)=>{
         const userId = Object.keys(userSocketMap).find(key => userSocketMap[key] === socket.id);
         if (userId) {
             delete userSocketMap[userId];
+            delete senderReceiverMap[userId];
             console.log(`Removed mapping for user ${userId}`);
         }
     });
 
-    socket.on('sendingMessage',({receiverId , msg})=>{
-        console.log('sending message is  from ', receiverId , " to " , msg);
-        const socketId = userSocketMap[receiverId];
-        if (socketId) {
-            io.to(socketId).emit('ReceiveMessage', msg);
-        } else {
-            console.log(`User with ID ${userId} is not connected.`);
+    socket.on("setReceiverId",({receiveId , sendId})=>{
+        console.log("receiveID is " , receiveId , " sendID" , sendId);
+        senderReceiverMap[sendId] = receiveId;
+        // console.log(senderReceiverMap[sendId]);
+    });
+
+    socket.on('sendingMessage',({msg})=>{
+        // console.log('sending message is  from ', receiverId , " to " , msg);
+        const res = msg.receiverId;
+        const sen = msg.senderId;
+        // console.log("hello" , res , "   " , sen);
+        const senderId = senderReceiverMap[sen];
+        const receiverConnect = senderReceiverMap[senderId];
+        const receiver = senderReceiverMap[receiverConnect];
+
+        // console.log("sendddd" , senderId);
+        // console.log("reccce" , receiver) ; 
+        // const check = senderId == senderReceiverMap[senderReceiverMap[senderId]];
+        // console.log(check);
+        
+        const socketId = userSocketMap[res];
+        if(socketId && senderId === receiver){
+                io.to(socketId).emit('ReceiveMessage', {msg});
+        }
+        else {
+            console.log(`User with ID ${socketId} is not connected.`);
         }
     })
 });
-
 
 app.use('/user', router);
 
