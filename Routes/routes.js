@@ -11,12 +11,12 @@ import DeleteChats from "../Controllers/DeleteChats.js";
 const router = Router();
 
 router.route('/').post(signUp);
-router.route('/').get(SignOut);
+router.route('/').get(AllUsers);
+router.route('/').delete(SignOut);
 router.route('/login').get(loginwithTokens);
 router.route('/login').post(loginUsingData);
-router.route('/').get(AllUsers);
 router.route('/chats').post(SavingChats);
-router.route('/chats').delete(DeleteChats);
+router.route('/chats/:id').delete(DeleteChats);
 router.route('/personalchats').post(fetchChats);
 
 export default router;
