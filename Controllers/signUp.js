@@ -9,7 +9,6 @@ const signUp = async (req, res) => {
     const data = req.body;
     const { userName, email, password } = data;
     try {
-
         const exists = await User.findOne({userName , email});
         if(exists){
             return  res.status(500).json({success:false , message: "User Already Exists"});
@@ -32,7 +31,6 @@ const signUp = async (req, res) => {
         res.cookie('refreshToken' , refreshToken , {httpOnly:true});
 
         res.status(201).json({ success:true , message: "User created successfully", newUser, AccessToken });
-
     } catch (error) {
         res.status(500).json({ success:false , 
             message: "Error while creating user" ,error});

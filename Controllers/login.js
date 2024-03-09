@@ -38,7 +38,7 @@ const loginUsingData = async (req , res) => {
 
             res.cookie('accessToken' , AccessToken , {httpOnly:true});
             res.cookie('refreshToken' , refreshToken , {httpOnly:true});
-             res.status(200).json({ success: true, newUser });
+            res.status(200).json({ success: true, newUser });
 
     } catch (error) {
          res.status(500).json({ success: false, message: 'An unexpected error occurred',error});
