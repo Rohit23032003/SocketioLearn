@@ -13,6 +13,12 @@ const userSchema = new mongoose.Schema({
         type:String,
         require:true
     },
+    userProfile:{
+        url: {
+            type: String,
+            default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQoYalG0iZwdwwSFMhNL4aDADjcSJFcuo31Y9OY6saF8ZG5dq3lLc8uXw0eJfUwvdwjTw&usqp=CAU"
+        }
+    },
     refreshToken:String
 },{timestamps:true});
 

@@ -8,6 +8,8 @@ import connect from './ConnectionDB/connectDb.js';
 import router from "./Routes/routes.js";
 import cookieParser from "cookie-parser";
 
+ 
+
 dotenv.config();
 
 const userSocketMap = {};
@@ -69,12 +71,6 @@ io.on("connection",(socket)=>{
         const senderId = senderReceiverMap[sen];
         const receiverConnect = senderReceiverMap[senderId];
         const receiver = senderReceiverMap[receiverConnect];
-
-        // console.log("sendddd" , senderId);
-        // console.log("reccce" , receiver) ; 
-        // const check = senderId == senderReceiverMap[senderReceiverMap[senderId]];
-        // console.log(check);
-        
         const socketId = userSocketMap[res];
         if(socketId && senderId === receiver){
                 io.to(socketId).emit('ReceiveMessage', {msg});
@@ -84,6 +80,8 @@ io.on("connection",(socket)=>{
         }
     })
 });
+
+
 
 app.use('/user', router);
 

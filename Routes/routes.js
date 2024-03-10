@@ -6,6 +6,8 @@ import SavingChats  from '../Controllers/saveChats.js';
 import fetchChats from '../Controllers/getChats.js';
 import SignOut  from "../Controllers/SignOut.js";
 import DeleteChats from "../Controllers/DeleteChats.js";
+import upload from '../Controllers/multer.js';
+import FileUpload from '../Controllers/FileUpload.js';
 
 
 const router = Router();
@@ -13,6 +15,7 @@ const router = Router();
 router.route('/').post(signUp);
 router.route('/').get(AllUsers);
 router.route('/').delete(SignOut);
+router.route('/profile').post(upload.single('UserFile') , FileUpload);
 router.route('/login').get(loginwithTokens);
 router.route('/login').post(loginUsingData);
 router.route('/chats').post(SavingChats);
