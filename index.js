@@ -67,7 +67,6 @@ io.on("connection",(socket)=>{
         // console.log('sending message is  from ', receiverId , " to " , msg);
         const res = msg.receiverId;
         const sen = msg.senderId;
-        // console.log("hello" , res , "   " , sen);
         const senderId = senderReceiverMap[sen];
         const receiverConnect = senderReceiverMap[senderId];
         const receiver = senderReceiverMap[receiverConnect];
