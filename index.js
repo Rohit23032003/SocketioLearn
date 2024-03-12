@@ -72,6 +72,7 @@ io.on("connection",(socket)=>{
         const receiver = senderReceiverMap[receiverConnect];
         const socketId = userSocketMap[res];
         if(socketId && senderId === receiver){
+            console.log(msg);
                 io.to(socketId).emit('ReceiveMessage', {msg});
         }
         else {
