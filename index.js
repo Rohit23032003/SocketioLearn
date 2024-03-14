@@ -15,9 +15,11 @@ dotenv.config();
 const userSocketMap = {};
 const senderReceiverMap = {};
 
+const RequestOrigin= process.env.ORIGIN || "http://localhost:5173"
+
 const app = express();
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:RequestOrigin,
     methods:["GET" , "POST","DELETE","PUT","PATCH"],
     credentials:true
 }));
@@ -30,7 +32,7 @@ const server = http.createServer(app);
 
 const io = new Server(server , {
     cors:{
-        origin:"http://localhost:5173",
+        origin:RequestOrigin,
         methods:["GET" , "POST","DELETE","PUT","PATCH"],
         credentials:true
     }
@@ -85,8 +87,10 @@ io.on("connection",(socket)=>{
 
 app.use('/user', router);
 
-server.listen(8000, ()=>{
-    console.log('Server running at 8000');
+const Port = process.env.PORT || 8000;
+
+server.listen(Port, ()=>{
+    console.log('Server running at' ,Port);
 })
 
 connect();
