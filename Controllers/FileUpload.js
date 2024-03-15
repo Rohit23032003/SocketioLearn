@@ -3,6 +3,8 @@ import User from '../Models/userModel.js';
 
 const FileUpload = async(req,res) => {
     const id = req.body.id;
+    console.log(req.body);
+    console.log(req.file.path);
     try {
         const localPath = req.file.path; // Get the local path of the uploaded file
         const cloudinaryUrl = await uploadOnCloudinary(localPath); // Upload to Cloudinary and get the URL
