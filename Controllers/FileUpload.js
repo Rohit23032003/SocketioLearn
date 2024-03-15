@@ -7,7 +7,7 @@ const FileUpload = async(req,res) => {
         const localPath = req.file.path; // Get the local path of the uploaded file
         const cloudinaryUrl = await uploadOnCloudinary(localPath); // Upload to Cloudinary and get the URL
         // const { id } = req.body;
-        if(cloudinaryUrl.url) return res.status(200).json({ success:true ,userProfile:cloudinaryUrl.url});
+        if(cloudinaryUrl) return res.status(200).json({ success:true ,userProfile:cloudinaryUrl.url});
         const user = await User.findById({_id:id});
         console.log(user);
         if(!user){
