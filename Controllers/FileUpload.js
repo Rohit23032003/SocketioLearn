@@ -2,11 +2,14 @@ import uploadOnCloudinary from './Cloudinary.js';
 import User from '../Models/userModel.js';
 
 const FileUpload = async(req,res) => {
+    const id = req.body.id;
     try {
         const localPath = req.file.path; // Get the local path of the uploaded file
         const cloudinaryUrl = await uploadOnCloudinary(localPath); // Upload to Cloudinary and get the URL
-        const { id } = req.body;
+        // const { id } = req.body;
+
         const user = await User.findById({_id:id});
+        console.log(user);
         if(!user){
            return  res.status(500).json({success : false , message:"User does not exists"});
         }

@@ -7,6 +7,7 @@ import http from 'http';
 import connect from './ConnectionDB/connectDb.js';
 import router from "./Routes/routes.js";
 import cookieParser from "cookie-parser";
+import bodyParser from 'body-parser';
 
  
 
@@ -26,6 +27,8 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json());
+
 
 const server = http.createServer(app);
 
