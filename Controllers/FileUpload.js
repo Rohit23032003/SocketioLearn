@@ -15,9 +15,9 @@ const FileUpload = async(req,res) => {
         if(!user){
            return  res.status(500).json({success : false , message:"User does not exists"});
         }
-        user.userProfile = cloudinaryUrl.url;
+        // user.userProfile = cloudinaryUrl.url;
         await user.save();
-       return  res.status(200).json({ success:true ,userProfile:cloudinaryUrl.url});
+       return  res.status(200).json({ user , success:true ,userProfile:cloudinaryUrl.url});
 
     } catch (error) {
         console.error('Error handling upload:', error);
