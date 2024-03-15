@@ -13,7 +13,7 @@ const FileUpload = async(req,res) => {
         }
         user.userProfile = cloudinaryUrl.url;
         await user.save();
-       return  res.status(200).json({ user , success:true ,userProfile:cloudinaryUrl.url});
+       return  res.status(200).json({success:true ,userProfile:cloudinaryUrl.url});
 
     } catch (error) {
         console.error('Error handling upload:', error);
