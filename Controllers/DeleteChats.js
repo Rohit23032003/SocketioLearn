@@ -2,7 +2,6 @@ import Chat from '../Models/chatModel.js';
 
 const DeleteChats = async (req , res ) => {
     const id = req.params.id.slice(1);
-    console.log("Chat Delete ID is ",id);
     try{
         const deletedChat = await Chat.deleteOne({_id:`${id}`});
         if(deletedChat.deletedCount == 1) {

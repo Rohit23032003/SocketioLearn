@@ -58,7 +58,6 @@ const loginwithTokens = async (req, res) => {
                 if (existedUser) return res.status(200).json({ success:true , message: "Logged in using access token", user: existedUser });
             }
         } catch (error) {
-            console.error('Error verifying access token:', error);
             return res.status(500).json({ success:false , error: 'Error while verifying access token' });
         }
     }
@@ -72,7 +71,6 @@ const loginwithTokens = async (req, res) => {
                 if (user && user.refreshToken === refreshToken) return res.status(200).json({success:true , message: 'Logged in using refresh token', user });
             }
         } catch (error) {
-            console.error('Error verifying refresh token:', error);
             return res.status(500).json({ success:false , message: 'Error while verifying refresh token', error});
         }
     }

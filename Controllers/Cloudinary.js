@@ -20,7 +20,6 @@ const uploadOnCloudinary = async function(localPath){
             resource_type :"auto",
             folder: "WebChatApp"
         });
-        console.log(response);
         return response;
     } catch (error) {
         return null;
