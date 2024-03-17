@@ -16,7 +16,7 @@ dotenv.config();
 const userSocketMap = {};
 const senderReceiverMap = {};
 
-const RequestOrigin= process.env.ORIGIN || "http://localhost:5173"
+const RequestOrigin = "https://65f71c630ab77da6a9095015--clever-torte-d37428.netlify.app/"
 
 const app = express();
 app.use(cors({
