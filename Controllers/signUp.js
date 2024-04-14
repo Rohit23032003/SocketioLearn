@@ -36,7 +36,7 @@ const signUp = async (req, res) => {
         res.cookie('accessToken' , AccessToken , {httpOnly:true});
         res.cookie('refreshToken' , refreshToken , {httpOnly:true});
 
-        res.status(201).json({ success:true , message: "User created successfully", newUser, AccessToken , refreshToken });
+        res.status(200).json({ success:true , message: "User created successfully", newUser, AccessToken , refreshToken });
     
     } catch (error) {
         res.status(500).json({ success:false , 

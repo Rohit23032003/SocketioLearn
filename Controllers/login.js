@@ -11,11 +11,11 @@ const loginUsingData = async (req , res) => {
         const{userName , password} = req.body;
         const user = await User.findOne({ userName });
         if (!user) {
-            return res.status(400).json({ success: false, message: 'User doesnot exists' });
+            return res.status(200).json({ success: false, message: 'User doesnot exists' });
         }
         const passwordMatch = await  bcrypt.compare(password, user.password);
         if (!passwordMatch) {
-            return res.status(400).json({ success: false, message: 'Invalid credentials' });
+            return res.status(200).json({ success: false, message: 'Invalid credentials' });
         }
         const newUser = {
             _id:user._id,
