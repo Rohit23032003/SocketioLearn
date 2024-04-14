@@ -23,7 +23,7 @@ const loginUsingData = async (req , res) => {
             email:user.email
         }
         
-        const AccessToken = jwt.sign({
+        const accessToken = jwt.sign({
             _id: user._id
         }, process.env.TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRY });        
     
@@ -36,9 +36,9 @@ const loginUsingData = async (req , res) => {
             user.refreshToken = refreshToken;
             await user.save();
 
-            res.cookie('accessToken' , AccessToken , {httpOnly:true});
+            res.cookie('accessToken' , accessToken , {httpOnly:true});
             res.cookie('refreshToken' , refreshToken , {httpOnly:true});
-            res.status(200).json({ success: true, newUser });
+            res.status(200).json({ success: true, newUser, accessToken , refreshToken});
 
     } catch (error) {
          res.status(500).json({ success: false, message: 'An unexpected error occurred',error});

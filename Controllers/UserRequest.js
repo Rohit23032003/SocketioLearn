@@ -1,29 +1,5 @@
-import Request from '../Models/ConnectionRequest.js';
+// import Request from '../Models/ConnectionRequest.js';
 import  User from '../Models/userModel.js';
-
-const UserRequest= async(req , res)=>{
-    try {
-        const  { senderId  ,receiverId , senderUserName , 
-        senderUserProfile,
-        receiverUserName,
-        receiverUserProfile
-        } = req.body;
-
-        const request = new Request({
-            senderId,
-            receiverId,
-            senderUserName,
-            senderUserProfile,
-            receiverUserName,
-            receiverUserProfile
-        });
-
-        await request.save();
-        res.status(200).json({success:true , message:'Request Send' , request});
-    } catch (error) {
-        res.status(500).json({success:false , message:'Error while sending request' , error });
-    }
-}
 
 
 const RequestAccept = async (req, res) => {
@@ -59,59 +35,6 @@ const RequestAccept = async (req, res) => {
 }
 
 
-const RequestReceived = async (req, res) => {
-    try {
-        const {currentUser} = req.body;
-        const requests = await Request.find({ receiverId: currentUser , requestStatus: true });
-        res.status(200).json({success : true , requests}); // Send the requests back to the client
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success:false ,  error: 'Internal Server Error' }); // Send an error response if something goes wrong
-    }
-}
-
-
-const RequestSent = async (req, res) => {
-    try {
-        const {currentUser} = req.body;
-        const requests = await Request.find({ senderId: currentUser });
-        res.status(200).json({success : true , requests}); // Send the requests back to the client
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success:false ,  error: 'Internal Server Error' }); // Send an error response if something goes wrong
-    }
-}
-
-
-
-const  requestStatusChange = async(req, res) => {
-        try {
-            const {requestId} = req.body;
-            const UpdateRequest = await Request.findByIdAndUpdate(requestId, { requestStatus: false }, { new: true });
-            UpdateRequest.requestStatus = false; 
-            await UpdateRequest.save();
-            res.status(200).json({success:true , UpdateRequest}); 
-        } catch (error) {
-            res.status(500).json({success:false , message:"Error While Change Status of Request" , error:error});
-        }
-}
-
-
-
-const deleteRequest = async (req , res) => {
-    try {
-        const {requestId} = req.body;
-        const deletedRequest = await Request.findOneAndDelete({ _id: requestId });
-        res.status(200).json({success:true , deletedRequest}); 
-    } catch (error) {
-        res.status(500).json({success:false , message:"Error While deleting Request" , error:error});
-    }
-}
-
-
-
-export  {UserRequest , RequestAccept , 
-    RequestReceived , deleteRequest ,
-     requestStatusChange , RequestSent};
+export  { RequestAccept };
 
 

@@ -8,6 +8,7 @@ dotenv.config();
 const signUp = async (req, res) => {
     const data = req.body;
     const { userName, email, password } = data;
+    // console.log(userName , email , password);
     try {
         const exists = await User.findOne({userName , email});
         if(exists){
@@ -23,14 +24,19 @@ const signUp = async (req, res) => {
         const newUser = new User({ userName, email, password: hashedPassword, refreshToken });
 
         await newUser.save();
-
+        newUser.connections.push({
+            senderId:newUser._id,
+            userName:newUser.userName,
+            userProfile:newUser.userProfile
+        });
+        await newUser.save();
         const AccessToken = jwt.sign({
             _id: newUser._id
         }, process.env.TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRY });
         res.cookie('accessToken' , AccessToken , {httpOnly:true});
         res.cookie('refreshToken' , refreshToken , {httpOnly:true});
 
-        res.status(201).json({ success:true , message: "User created successfully", newUser, AccessToken });
+        res.status(201).json({ success:true , message: "User created successfully", newUser, AccessToken , refreshToken });
     
     } catch (error) {
         res.status(500).json({ success:false , 

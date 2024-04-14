@@ -9,9 +9,7 @@ import DeleteChats from "../Controllers/DeleteChats.js";
 import upload from '../Controllers/multer.js';
 import FileUpload from '../Controllers/FileUpload.js';
 
-import {UserRequest , RequestAccept , 
-    RequestReceived , deleteRequest ,
-     requestStatusChange , RequestSent} from '../Controllers/UserRequest.js';
+import {RequestAccept} from '../Controllers/UserRequest.js';
 
 
 import ConnectedUsers from '../Controllers/Connections.js';
@@ -27,13 +25,8 @@ router.route('/login').post(loginUsingData);
 router.route('/chats').post(SavingChats);
 router.route('/chats/:id').delete(DeleteChats);
 router.route('/personalchats').post(fetchChats);
-router.route('/UserRequest').post(UserRequest);
 router.route('/RequestAccept').post(RequestAccept);
-router.route('/ConnectedUser').get(ConnectedUsers);
-router.route('/RequestSent').get(RequestSent);
-router.route('/RequestReceived').get(RequestReceived);
-router.route('/deleteRequest').delete(deleteRequest);
-router.route('/requestStatusChange').post(requestStatusChange);
+router.route('/ConnectedUser/:id').get(ConnectedUsers);
 
 export default router;
 

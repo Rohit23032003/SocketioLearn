@@ -37,6 +37,33 @@ const userSchema = new mongoose.Schema({
     refreshToken:String
 },{timestamps:true});
 
+
+userSchema.pre('save', async function(next) {
+    if (this.isModified('userProfile')) {
+        const updatedProfileUrl = this.userProfile;
+        try {
+            // Update profiles of connected users
+            await Promise.all(this.connections.map(async (connection) => {
+                const connectedUser = await mongoose.model('User').findById(connection.senderId);
+                if (connectedUser) {
+                    connectedUser.connections.forEach(conn => {
+                        if (conn.senderId.equals(this._id)) {
+                            conn.userProfile = updatedProfileUrl;
+                        }
+                    });
+                    await connectedUser.save();
+                }
+            }));
+            next();
+        } catch (error) {
+            next(error);
+        }
+    } else {
+        next();
+    }
+});
+
+
  const User = mongoose.model('User' , userSchema);
  
  export default User;

@@ -45,25 +45,25 @@ const io = new Server(server , {
 
 io.on("connection",(socket)=>{
 
-    console.log("user connected with id ",socket.id);
+    // console.log("user connected with id ",socket.id);
 
     socket.on('setUserId', (senderId) => {
-        console.log(`User ${senderId} connected with socket ID ${socket.id}`);
+        // console.log(`User ${senderId} connected with socket ID ${socket.id}`);
         userSocketMap[senderId] = socket.id;
     });
 
     socket.on('disconnect', () => {
-        console.log('User disconnected:', socket.id);
+        // console.log('User disconnected:', socket.id);
         const userId = Object.keys(userSocketMap).find(key => userSocketMap[key] === socket.id);
         if (userId) {
             delete userSocketMap[userId];
             delete senderReceiverMap[userId];
-            console.log(`Removed mapping for user ${userId}`);
+            // console.log(`Removed mapping for user ${userId}`);
         }
     });
 
     socket.on("setReceiverId",({receiveId , sendId})=>{
-        console.log("receiveID is " , receiveId , " sendID" , sendId);
+        // console.log("receiveID is " , receiveId , " sendID" , sendId);
         senderReceiverMap[sendId] = receiveId;
         // console.log(senderReceiverMap[sendId]);
     });
@@ -77,7 +77,7 @@ io.on("connection",(socket)=>{
         const receiver = senderReceiverMap[receiverConnect];
         const socketId = userSocketMap[res];
         if(socketId && senderId === receiver){
-            console.log(msg);
+            // console.log(msg);
                 io.to(socketId).emit('ReceiveMessage', {msg});
         }
         else {
